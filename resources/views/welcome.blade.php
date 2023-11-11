@@ -13,6 +13,9 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="{{ asset('js/service.js') }}"></script>
+    <script src="{{ asset('js/updateTable.js') }}"></script>
+    <script src="{{ asset('js/fetchZipCode.js') }}"></script>
+    <script src="{{ asset('js/zipCodeInput.js') }}"></script>
 </head>
 
 <body class="antialiased">
@@ -24,59 +27,50 @@
         </div>
         <div class="adress">
             <div>
-                <p>CEP: </p> <span id="cep"></span>
+                <p>CEP: </p> <span id="fetched_zip_code"></span>
             </div>
             <div>
-                <p>Logradouro: </p> <span id="logradouro"></span>
+                <p>Rua: </p> <span id="fetched_street"></span>
             </div>
             <div>
-                <p>Complemento: </p> <span id="complemento"></span>
+                <p>Complemento: </p> <span id="fetched_complement"></span>
             </div>
             <div>
-                <p>Bairro: </p> <span id="bairro"></span>
+                <p>Bairro: </p> <span id="fetched_neighborhood"></span>
             </div>
             <div>
-                <p>Localidade: </p> <span id="localidade"></span>
+                <p>Cidade: </p> <span id="fetched_city"></span>
             </div>
             <div>
-                <p>UF: </p> <span id="uf"></span>
+                <p>UF: </p> <span id="fetched_state"></span>
             </div>
         </div>
-        <button class="button" onclick="salvarEndereco()">Salvar</button>
+        <button class="button" onclick="saveAddress()">Salvar</button>
         <table>
             <thead>
                 <tr>
                     <th>CEP </th>
-                    <th>Logradouro</th>
+                    <th>Rua</th>
                     <th>Complemento</th>
-                    <th class="sortable" id="neighborhood" onclick="orderByColumn(event)">
+                    <th class="sortable" id="neighborhood" onclick="handleOrderBy(event)">
                         Bairro
                         <img class="arrows arrow_disabled" src="{{ asset('arrow-up.svg') }}" alt="">
                         <img class="arrows arrow_hidden" src="{{ asset('arrow-down.svg') }}" alt="">
                     </th>
-                    <th class="sortable" id="city" onclick="orderByColumn(event)">
+                    <th class="sortable" id="city" onclick="handleOrderBy(event)">
                         Cidade
                         <img class="arrows arrow_disabled" src="{{ asset('arrow-up.svg') }}" alt="">
                         <img class="arrows arrow_hidden" src="{{ asset('arrow-down.svg') }}" alt="">
                     </th>
-                    <th class="sortable" id="state" onclick="orderByColumn(event)">
+                    <th class="sortable" id="state" onclick="handleOrderBy(event)">
                         UF
                         <img class="arrows arrow_disabled" src="{{ asset('arrow-up.svg') }}" alt="">
                         <img class="arrows arrow_hidden" src="{{ asset('arrow-down.svg') }}" alt="">
                     </th>
                 </tr>
             </thead>
-            <tbody id="testBody">
-                @foreach ($data as $adress)
-                <tr>
-                    <td>{{$adress->cep}}</td>
-                    <td>{{$adress->logradouro}}</td>
-                    <td>{{$adress->complemento}}</td>
-                    <td>{{$adress->bairro}}</td>
-                    <td>{{$adress->localidade}}</td>
-                    <td>{{$adress->uf}}</td>
-                </tr>
-                @endforeach
+            <tbody id="table_body">
+
             </tbody>
         </table>
 

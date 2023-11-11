@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('cep')->unique();
-            $table->string('logradouro');
-            $table->string('complemento')->nullable();
-            $table->string('bairro');
-            $table->string('localidade');
-            $table->string('uf', 2);
+            $table->string('zipCode')->unique();
+            $table->string('street');
+            $table->string('complement')->nullable();
+            $table->string('neighborhood');
+            $table->string('city');
+            $table->string('state', 2);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('adresses');
+        Schema::dropIfExists('addresses');
     }
 };
