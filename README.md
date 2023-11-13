@@ -1,4 +1,4 @@
-**Documentação para execução da aplicação Laravel localmente**
+# Passo a passo para execução da aplicação
 
 **Requisitos**
 
@@ -20,7 +20,7 @@ DB_USERNAME=ultralims
 DB_PASSWORD=
 ```
 
-**Passo a passo**
+**Instalação e execução**
 
 1. Instale as dependências do projeto:
 
@@ -42,7 +42,9 @@ php artisan serve
 npm run dev
 ```
 
-**Arquivos modificados**
+A aplicação estará disponível na porta 8000.
+
+**Arquivos**
 
 Os seguintes arquivos foram modificados/criados:
 
@@ -68,4 +70,4 @@ Os seguintes arquivos foram modificados/criados:
 
 **Observações**
 
--   Caso prefira, poderá usar os dados do banco de dados que enviei por e-mail.
+-   Caso não queria usar um banco de dados local, enviei a senha do banco por email.
