@@ -1,5 +1,6 @@
 const handleZipCode = (event) => {
-    toggleErrorState(false);
+    clearFetchStatus();
+    clearSaveStatus();
 
     let input = event.target;
     input.value = zipCodeMask(input.value);

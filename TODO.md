@@ -8,20 +8,21 @@
         -   [ ] Estilizar
 -   [x] Mostrar os dados do endereço
 -   [x] Salvar o endereço
--   [ ] Tabela de endereços
+-   [x] Tabela de endereços
     -   [x] Buscar
-    -   [ ] Estilizar
+    -   [x] Loading
+    -   [x] Estilizar
     -   [ ] Paginação
-    -   [ ] Ordenação
-        -   [ ] Cidade
-        -   [ ] Bairro
-        -   [ ] Estado
+    -   [x] Ordenação
+        -   [x] Cidade
+        -   [x] Bairro
+        -   [x] Estado
 -   [ ] Fazer tres tentativas na busca de CEP
 
 # BACK
 
--   [ ] Ordenação
-    -   [ ] Cidade
-    -   [ ] Bairro
-    -   [ ] Estado
--   [ ] Tratar erros
+-   [x] Ordenação
+    -   [x] Cidade
+    -   [x] Bairro
+    -   [x] Estado
+-   [x] Tratar erros

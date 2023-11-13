@@ -1,20 +1,22 @@
 let fetchedZipCode;
 
-async function fetchZipCode(zipCode) {
+const fetchZipCode = async (zipCode) => {
     const baseUrl = "https://viacep.com.br/ws";
     lastZipCodeFetched = zipCode;
 
     const sanitizedZipCode = zipCode.replace("-", "");
     try {
-        toggleLoadingState(true);
+        toggleFetchLoadingStatus(true);
+
         const response = await fetch(`${baseUrl}/${sanitizedZipCode}/json`, {
             method: "GET",
         });
-        toggleLoadingState(false);
-
         const addressOrError = await response.json();
+
+        toggleFetchLoadingStatus(false);
+
         if (addressOrError.erro) {
-            toggleErrorState(true);
+            setFetchErrorStatus(true);
         } else {
             const mappedAddres = {
                 zipCode: addressOrError.cep,
@@ -27,13 +29,14 @@ async function fetchZipCode(zipCode) {
 
             fetchedZipCode = mappedAddres;
             showAddress(mappedAddres);
+            disableSaveButton(false);
         }
     } catch (err) {
         console.error(err);
     }
-}
+};
 
-function showAddress(fetchedAddress) {
+const showAddress = (fetchedAddress) => {
     const fieldsIds = [
         "fetched_zip_code",
         "fetched_street",
@@ -46,28 +49,27 @@ function showAddress(fetchedAddress) {
     fieldsIds.forEach((field, index) => {
         const spanEl = document.getElementById(field);
 
-        const curAddressKey = adressKeys[index];
+        const curAddressKey = addressKeys[index];
         spanEl.innerHTML = fetchedAddress[curAddressKey] || "--";
     });
-}
+};
 
-async function saveAddress() {
-    const baseUrl = "http://localhost:8000/api/addresses";
+const handleErrors = () => {};
 
-    const { ddd, gia, ibge, siafi, ...validFields } = fetchedZipCode;
+const setFetchStatusContent = (content) => {
+    document.getElementById("fetch_status").innerHTML = content;
+};
 
-    const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(validFields),
-    };
+const toggleFetchLoadingStatus = (isLoading) => {
+    document.getElementById("zip_code_input").disabled = isLoading;
+    setFetchStatusContent(isLoading ? "Buscando..." : "");
+};
 
-    try {
-        const response = await fetch(baseUrl, options);
-        const address = await response.json();
+const setFetchErrorStatus = (isError) => {
+    setFetchStatusContent(isError ? "CEP não encontrado." : "");
+    setTimeout(clearFetchStatus, 5000);
+};
 
-        addAddressToTable(address);
-    } catch (err) {
-        console.error(err);
-    }
-}
+const clearFetchStatus = () => {
+    setFetchStatusContent("");
+};
