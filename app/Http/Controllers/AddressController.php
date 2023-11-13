@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AddressResource;
+use App\Exceptions\AddressException;
 use App\Models\Address;
+use Illuminate\Database\QueryException;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
-    public function index()
-    {
-        return view('welcome');
-    }
-
     public function all(Request $request)
     {
         $order_by = $request->query->get('order_by');
@@ -33,8 +30,13 @@ class AddressController extends Controller
 
     public function store(Request $request)
     {
-
-        $adress = Address::create($request->all());
-        return response()->json($adress, 201);
+        try {
+            $address = Address::create($request->all());
+            return response()->json($address, 201);
+        } catch (UniqueConstraintViolationException $err) {
+            throw AddressException::zipCodeAlreadyExists();
+        } catch (QueryException $err) {
+            throw AddressException::invalidFields();
+        }
     }
 }
